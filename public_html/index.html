@@ -2,7 +2,7 @@
 <html>
 <head>
   <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet">
-<!--<link rel="stylesheet" type="text/css" href="/public_html/stylesheets/main.css" />
+<!--<link rel="stylesheet" type="text/css" href="/public_html/stylesheets/main.css" />-->
 <style type="text/css">
 :focus {
 outline: none;
@@ -38,6 +38,7 @@ p{
 }
 
 button {
+display:block;
 	width:300px;
 	height:50px;
 	margin:0 auto;
@@ -49,17 +50,55 @@ button {
 	font-family: 'Old Standard TT', serif;
 	font-size:1.5rem;
 }
+ul, li
+{
+	display:block;
+	margin:0 auto;
+	width:700px;
+	color:#65A5D1;
+	font-family: 'Old Standard TT', serif;
+	font-size:1rem;
+}
+li{
+	padding-left:20px;
+}
+li:first-child{
+	border-radius:5px 5px 0 0;
+}
+li:last-child{
+	border-radius:0 0 5px 5px;
+}
+li:nth-child(odd){
+	background-color:#02243b;
+}
+li:nth-child(even){
+	background-color:#1d334a;
+}
+input{
+	display:block;
+	margin:0 auto;
+	margin-bottom:10px;
+	margin-top:10px;
+	border:1px solid black;
+	width: 300px;
+	height:25px;
+	font-family: 'Old Standard TT', serif;
+	font-size:1rem;
+	border:0px;
+	border-radius:5px;
+	padding-left:10px;
+	}
 </style>
--->
+
 <meta charset="utf-8">
-<title>17 день #100днейкода.</title>
+<title>19 день #100днейкода.</title>
 </head>
 
 <body>
 	<h1>#100днейкода</h1>
 <ul id="messages"></ul>
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="m" autocomplete="off" /><button>Отправить запрос</button>
     </form>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
