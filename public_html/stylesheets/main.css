@@ -1,0 +1,45 @@
+:focus {
+outline: none;
+}
+
+
+html,body{
+	height:100%;
+	font-size:16px;
+}
+
+body{
+	display:flex;
+	background-color:#03406A;
+	flex-direction:column;
+	
+}
+
+h1{
+	margin:0 auto 0;
+	color:#65A5D1;
+	font-family: 'Old Standard TT', serif;
+	font-size:5rem;
+	margin-top:20%;
+	text-shadow: 3px 3px 3px #0A2B41;
+	}
+p{
+	margin:0 auto 0;
+	color:#65A5D1;
+	font-family: 'Old Standard TT', serif;
+	font-size:2rem;
+	text-shadow: 3px 3px 3px #0A2B41;
+}
+
+button {
+	width:300px;
+	height:50px;
+	margin:0 auto;
+	border:0;
+	margin-bottom:20px;
+	background-color:#65A5D1;
+	border:1px solid black;
+	border-radius:5px;
+	font-family: 'Old Standard TT', serif;
+	font-size:1.5rem;
+}
