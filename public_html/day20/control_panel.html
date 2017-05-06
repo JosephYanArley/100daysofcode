@@ -21,7 +21,7 @@
 			</td>
 			<td></td>
 			<td>
-				<button class="control" onclick="right" value="right">Вправо</button>
+				<button class="control" onclick="right()" value="right">Вправо</button>
 			</td>
 		</tr>
 		<tr>
@@ -34,19 +34,19 @@
     <script>
 		var socket = io.connect()
 		function up(){
-			socket.emit('moving','up');
+			socket.emit('socket_pack','up');
 			return false;
 		}
 		function down(){
-			socket.emit('moving','down');
+			socket.emit('socket_pack','down');
 			return false;
 		}
 		function left(){
-			socket.emit('moving','left');
+			socket.emit('socket_pack','left');
 			return false;
 		}
 		function right(){
-			socket.emit('moving','right');
+			socket.emit('socket_pack','right');
 			return false;
 		}
 	</script>

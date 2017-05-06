@@ -11,8 +11,8 @@ res.sendFile(__dirname + '/public_html/');
 });
 
 io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+  socket.on('socket_pack', function(msg){
+    io.emit('socket_pack', msg);
   });
 });
 
