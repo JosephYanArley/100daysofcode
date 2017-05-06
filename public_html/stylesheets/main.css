@@ -32,6 +32,7 @@ p{
 }
 
 button {
+display:block;
 	width:300px;
 	height:50px;
 	margin:0 auto;
@@ -42,4 +43,59 @@ button {
 	border-radius:5px;
 	font-family: 'Old Standard TT', serif;
 	font-size:1.5rem;
+}
+ul, li
+{
+	display:block;
+	margin:0 auto;
+	width:700px;
+	color:#65A5D1;
+	font-family: 'Old Standard TT', serif;
+	font-size:1rem;
+}
+li{
+	padding-left:20px;
+}
+li:first-child{
+	border-radius:5px 5px 0 0;
+}
+li:last-child{
+	border-radius:0 0 5px 5px;
+}
+li:nth-child(odd){
+	background-color:#02243b;
+}
+li:nth-child(even){
+	background-color:#1d334a;
+}
+input{
+	display:block;
+	margin:0 auto;
+	margin-bottom:10px;
+	margin-top:10px;
+	border:1px solid black;
+	width: 300px;
+	height:25px;
+	font-family: 'Old Standard TT', serif;
+	font-size:1rem;
+	border:0px;
+	border-radius:5px;
+	padding-left:10px;
+	}
+button.control{
+	width:150px;
+	}
+.control_panel{
+	display:block;
+	margin:0 auto;
+}
+a{
+	text-decoration:none;
+	color:#65A5D1;
+}
+a:hover{
+	color:#8ebede;
+	}
+a:visited{
+	color:#3074a1;
 }

@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+<meta charset="utf-8">
+<title>20 день #100днейкода - Управление</title>
+</head>
+
+<body>
+	<h1>Управление</h1>
+	<table class="control_panel">
+		<tr>
+			<td colspan="3">
+				<button class="control" onclick="up()" value="up">Вверх</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button class="control" onclick="left()" value="left">Влево</button>
+			</td>
+			<td></td>
+			<td>
+				<button class="control" onclick="right" value="right">Вправо</button>
+			</td>
+		</tr>
+		<tr>
+			<td  colspan="3">
+				<button class="control" onclick="down()" value="down">Вниз</button>
+			</td>
+	</table>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+		var socket = io.connect()
+		function up(){
+			socket.emit('moving','up');
+			return false;
+		}
+		function down(){
+			socket.emit('moving','down');
+			return false;
+		}
+		function left(){
+			socket.emit('moving','left');
+			return false;
+		}
+		function right(){
+			socket.emit('moving','right');
+			return false;
+		}
+	</script>
+</body>
+
+</html>
