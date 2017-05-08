@@ -1,4 +1,4 @@
-var app = require('express')();
+п»їvar app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
@@ -16,31 +16,20 @@ io.on('connection', function(socket){
   socket.on('socket_pack', function(msg){
     io.emit('socket_pack', msg);
   });
-	socket.emit('sprites_21', array_sprite);				//отправляем массив текущему пользователю
-    socket.broadcast.emit('sprites_21', array_sprite);		//отправляем массив всем пользователям. Загрузка для вновь подключившихся
+	socket.emit('sprites_21', array_sprite);				//РѕС‚РїСЂР°РІР»СЏРµРј РјР°СЃСЃРёРІ С‚РµРєСѓС‰РµРјСѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ
+    socket.broadcast.emit('sprites_21', array_sprite);		//РѕС‚РїСЂР°РІР»СЏРµРј РјР°СЃСЃРёРІ РІСЃРµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРј. Р—Р°РіСЂСѓР·РєР° РґР»СЏ РІРЅРѕРІСЊ РїРѕРґРєР»СЋС‡РёРІС€РёС…СЃСЏ
     socket.on('sprites_21', function (data) {
-        if (socket.id in array_sprite) {					//если свойство socket.id элемента массива есть
-            switch (data.command) {
-                case 'up':									//отрабатываем движение
-                    array_sprite[socket.id].y -= 10;
-                    break;
-                case 'down':
-                    array_sprite[socket.id].y += 10;
-                    break;
-                case 'right':
-                    array_sprite[socket.id].x += 10;
-                    break;
-                case 'left':
-                    array_sprite[socket.id].x -= 10;
-                    break;
-            }
+        if (socket.id in array_sprite) {					//РµСЃР»Рё СЃРІРѕР№СЃС‚РІРѕ socket.id СЌР»РµРјРµРЅС‚Р° РјР°СЃСЃРёРІР° РµСЃС‚СЊ
+            								//РѕС‚СЂР°Р±Р°С‚С‹РІР°РµРј РґРІРёР¶РµРЅРёРµ
+            array_sprite[socket.id].y = data.y;
+            array_sprite[socket.id].x = data.x;
+
         } else {
-            array_sprite[socket.id] = {							//иначе создаем элемент с начальными данными
-                x: 225,
-                y: 225
+            array_sprite[socket.id] = {							//РёРЅР°С‡Рµ СЃРѕР·РґР°РµРј СЌР»РµРјРµРЅС‚ СЃ РЅР°С‡Р°Р»СЊРЅС‹РјРё РґР°РЅРЅС‹РјРё
+                x: 0,
+                y: 0
             };
         }
-
         socket.broadcast.emit('sprites_21', array_sprite);
     });
 
