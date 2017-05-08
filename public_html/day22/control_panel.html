@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+<meta charset="utf-8">
+<title>22 день #100днейкода - Управление</title>
+</head>
+
+<body>
+
+	<canvas id="control-canvas" width="500" height="500" class="day20canvas">
+		alternate content
+	</canvas>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	
+    <script>
+        socket = io(location.origin);
+		var field = document.getElementById("control-canvas"),
+		panel     = field.getContext('2d');
+		panel.beginPath();				//подготовили канвас
+		panel.moveTo(500,0);
+		panel.lineTo(0,500);      
+		panel.moveTo(0,0);
+		panel.lineTo(500,500);    
+		panel.stroke();           
+		var data = {};
+		var m_pressed = false;
+		//ctx.fillText("1", 355, 260);//буквы и цифры
+		field.onmousemove = function (event) {
+		    data.x = event.pageX;
+		    data.y = event.pageY;
+		    console.log(data);
+			socket.emit('sprites_21', data);
+                };
+	</script>
+</body>
+
+</html>
