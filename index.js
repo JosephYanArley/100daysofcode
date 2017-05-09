@@ -19,17 +19,7 @@ io.on('connection', function(socket){
 	socket.emit('sprites_21', array_sprite);				//отправляем массив текущему пользователю
     socket.broadcast.emit('sprites_21', array_sprite);		//отправляем массив всем пользователям. Загрузка для вновь подключившихся
     socket.on('sprites_21', function (data) {
-        if (socket.id in array_sprite) {					//если свойство socket.id элемента массива есть
-            								//отрабатываем движение
-            array_sprite[socket.id].y = data.y;
-            array_sprite[socket.id].x = data.x;
-
-        } else {
-            array_sprite[socket.id] = {							//иначе создаем элемент с начальными данными
-                x: 0,
-                y: 0
-            };
-        }
+        array_sprite[socket.id] = data;
         socket.broadcast.emit('sprites_21', array_sprite);
     });
 
