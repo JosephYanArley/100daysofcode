@@ -13,20 +13,22 @@ res.sendFile(__dirname + '/public_html/');
 var array_sprite = {};
 
 io.on('connection', function(socket){
+
   socket.on('socket_pack', function(msg){
     io.emit('socket_pack', msg);
   });
-	socket.emit('sprites_21', array_sprite);				//отправляем массив текущему пользователю
-    socket.broadcast.emit('sprites_21', array_sprite);		//отправляем массив всем пользователям. Загрузка для вновь подключившихся
-    socket.on('sprites_21', function (data) {
-        array_sprite[socket.id] = data;
-        socket.broadcast.emit('sprites_21', array_sprite);
-    });
 
-    socket.on('disconnect', function(){
-        delete array_sprite[socket.id];
-        socket.broadcast.emit('sprites_21', array_sprite);
-    });
+  socket.emit('spheres_on', array_sprite);
+
+  socket.on('spheres_out', function (data) {
+        array_sprite[socket.id] = data;
+        socket.broadcast.emit('spheres_in', array_sprite);
+  });
+
+  socket.on('disconnect', function(){
+    delete array_sprite[socket.id];
+    socket.broadcast.emit('spheres_in', array_sprite);
+  });
 });
 
 http.listen(port, function(){
