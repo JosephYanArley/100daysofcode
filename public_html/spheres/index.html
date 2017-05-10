@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+<meta charset="utf-8">
+<title>24 день #100днейкода - Spheres</title>
+</head>
+
+<body>
+
+    <!--<h1>Spheres</h1>-->
+
+	<canvas id="Canvas" width="500" height="500" class="day20canvas">
+		alternate content
+	</canvas>
+
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    	<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+	<script>
+
+        var socket = io(location.origin);																						//подключаем сокет,
+        var stage = new createjs.Stage("Canvas");																		//создаем канвас
+        var sprite = new createjs.Shape();																				//создаем объект
+        var diameter = Math.random()*(50 - 10 +1)+10;																	//рандом размера
+        var color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);														//рандом цвета
+
+
+        createjs.Touch.enable(stage);																					//ограничения для мыши и поддержка Touch для сенсора
+        stage.enableMouseOver(10);
+        stage.mouseMoveOutside = true;
+
+        sprite.graphics.beginFill(color).drawCircle(1,1,diameter);														//рисуем круг
+        sprite.x=250;
+        sprite.y=250;
+        stage.addChild(sprite);																							//добавялем на канвас с координатами
+
+        socket.emit('spheres_out', {x: sprite.x, y:sprite.y, diameter:diameter, color:color});
+
+		stage.update();
+
+        sprite.on ('pressmove', function(event){                                                                        //отработка движения при нажатой клавише
+          event.target.x = event.stageX;
+          event.target.y = event.stageY;
+          stage.update();
+          socket.emit('spheres_out', {x:event.StageX, y:event.StageY, color:color, diameter:diameter});
+		});
+
+        socket.on('spheres_in', function(data) {
+			stage.removeAllChildren();
+            stage.addChild(sprite);
+            for (var key in data) {
+                if (key !== socket.id){
+                    var sprite = new createjs.Shape();
+                    var color = data[key].color;
+                    var diameter = data[key].diameter;
+                    sprite.graphics.beginFill(color).drawCircle(1,1,diameter);
+                    sprite.x = data[key].x;
+                    sprite.y = data[key].y;
+                    stage.addChild(sprite);
+                }
+
+            }
+
+                stage.update();
+
+        });
+
+    </script>
+</body>
+
+</html>
