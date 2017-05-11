@@ -22,6 +22,7 @@ io.on('connection', function(socket){
 
   socket.on('spheres_out', function (data) {
         array_sprite[socket.id] = data;
+        socket.emit('spheres_in', array_sprite);
         socket.broadcast.emit('spheres_in', array_sprite);
   });
 

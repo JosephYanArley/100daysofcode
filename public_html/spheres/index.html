@@ -24,7 +24,7 @@
         var sprite = new createjs.Shape();																				//создаем объект
         var diameter = Math.random()*(50 - 10 +1)+10;																	//рандом размера
         var color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);														//рандом цвета
-
+		var i;
 
         createjs.Touch.enable(stage);																					//ограничения для мыши и поддержка Touch для сенсора
         stage.enableMouseOver(10);
@@ -43,29 +43,42 @@
           event.target.x = event.stageX;
           event.target.y = event.stageY;
           stage.update();
-          socket.emit('spheres_out', {x:event.StageX, y:event.StageY, color:color, diameter:diameter});
+          socket.emit('spheres_out', {});
 		});
 
-        socket.on('spheres_in', function(data) {
-			stage.removeAllChildren();
-            stage.addChild(sprite);
+        socket.on('spheres_in', function (data) {
+            drawSprite(event.StageX, event.StageY, color, diameter);
             for (var key in data) {
-                if (key !== socket.id){
-                    var sprite = new createjs.Shape();
-                    var color = data[key].color;
-                    var diameter = data[key].diameter;
-                    sprite.graphics.beginFill(color).drawCircle(1,1,diameter);
-                    sprite.x = data[key].x;
-                    sprite.y = data[key].y;
-                    stage.addChild(sprite);
-                }
+                 if (key !== socket.id) {
+                     var sprite = new createjs.Shape();
+                     var color = data[key].color;
+                     var diameter = data[key].diameter;
+                     sprite.graphics.beginFill(color).drawCircle(1, 1, diameter);
+                     sprite.x = data[key].x;
+                     sprite.y = data[key].y;
+                 }
 
-            }
+            };
 
-                stage.update();
+            stage.update();
 
         });
-
+		function drawSprite(data){
+		    for (var i=0; i<5; i++){
+		        for (var key in data){
+		            var sprite = new createjs.Shape();
+		            var color = data[key].color;
+		            var diameter = data[key].diameter;
+		            setTimeout(function(){
+                        sprite.graphics.beginFill(color).drawCircle(1, 1, diameter);
+                        sprite.x = data[key].x;
+                        sprite.y = data[key].y;
+					}, 100);
+		            stage.addChild(sprite);
+		            stage.update();
+				}
+			}
+		};
     </script>
 </body>
 
