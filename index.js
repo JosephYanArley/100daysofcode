@@ -26,6 +26,14 @@ io.on('connection', function(socket){
         socket.broadcast.emit('spheres_in', array_sprite);
   });
 
+    socket.emit('dom_spheres_in', array_sprite);
+    socket.on('dom_spheres_out', function (data) {
+        data.socket_id = socket.id;
+        array_sprite[socket.id] = data;
+        socket.emit('dom_spheres_in', array_sprite);
+        socket.broadcast.emit('dom_spheres_in', array_sprite);
+    });
+
   socket.on('disconnect', function(){
     delete array_sprite[socket.id];
     socket.broadcast.emit('spheres_in', array_sprite);

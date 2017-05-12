@@ -1,0 +1,68 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>26</title>
+
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            height: inherit;
+        }
+        .spheres {
+            border-radius: 50%;
+            position: absolute;
+
+        }
+    </style>
+</head>
+<body onmousemove="movement(event)" id="canvas">
+<div id="sphere"></div>
+</div>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script type="text/javascript">
+
+        var color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+        var diameter = Math.random()*(50 - 10 +1)+10;
+
+    function movement(e) {
+        var x = e.pageX; // Координата X курсора
+        var y = e.pageY; // Координата Y курсора
+        var height = diameter/2;
+
+        document.getElementById("sphere").style.top = y-height;
+        document.getElementById("sphere").style.left = x-height;
+        document.getElementById("sphere").style.backgroundColor = color;
+        document.getElementById("sphere").style.width = diameter;
+        document.getElementById("sphere").style.height = diameter;
+
+        socket.emit('dom_spheres_out', {x: x, y: y, backgroundColor: color, width:diameter, height:diameter});
+    }
+    var socket = io(location.origin);
+    socket.on('dom_spheres_in', function (data) {
+        for (var key in data) {
+            if (socket.id != key) {
+                var element = document.getElementById(key);
+                if (!element) {
+                    var div = document.createElement('div');
+                    div.className = 'spheres';
+                    div.id = key;
+                    div.style.top = 100;
+                    div.style.left = 100;
+                    div.style.width = Math.random()*(50 - 10 +1)+10;
+                    div.style.height = div.style.width;
+                    div.style.backgroundColor = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+                    document.getElementById('canvas').appendChild(div);
+                } else {
+                    element.style.top = data[key].y;
+                    element.style.left = data[key].x;
+                    console.log(data);
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
