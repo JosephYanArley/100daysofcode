@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+<meta charset="utf-8">
+<title>#100днейкода.</title>
+</head>
+
+<body>
+	<h1>#100днейкода</h1>
+    <pre id="selfie_output"></pre>                                                                                       <!--преформат для вывода четкого форматирования-->
+    <script>
+        function selfie() {
+            var something;                                                                                              //пара переменных для демонстрации PRE
+            var someArray=[];
+            return String(selfie) + "\n document.getElementById('selfie_output').innerText = selfie();";              //функция возвращает часть кода + сам вывод, т.к. он еще не обработан
+        }
+        document.getElementById('selfie_output').innerText = selfie();
+    </script>
+</body>
+
+</html>
