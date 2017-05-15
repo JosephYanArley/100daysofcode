@@ -4,7 +4,7 @@
   <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
 <meta charset="utf-8">
-<title>24 день #100днейкода - Spheres</title>
+<title>29 день #100днейкода - Spheres</title>
 </head>
 
 <body>
@@ -21,14 +21,17 @@
 
         var socket = io(location.origin);																						//подключаем сокет,
         var stage = new createjs.Stage("Canvas");																		//создаем канвас
+        stage.canvas.width = window.innerWidth;																			//в пользу
+        stage.canvas.height = window.innerHeight;
         var sprite = new createjs.Shape();																				//создаем объект
         var diameter = Math.random()*(50 - 10 +1)+10;																	//рандом размера
         var color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);														//рандом цвета
+        sprite.graphics.beginFill(color).drawCircle(1, 1, diameter);
 		var i;
 
         createjs.Touch.enable(stage);																					//ограничения для мыши и поддержка Touch для сенсора
-        stage.enableMouseOver(10);
-        stage.mouseMoveOutside = true;
+//        stage.enableMouseOver(10);
+//        stage.mouseMoveOutside = true;
 
         sprite.graphics.beginFill(color).drawCircle(1,1,diameter);														//рисуем круг
         sprite.x=250;
@@ -36,18 +39,21 @@
         stage.addChild(sprite);																							//добавялем на канвас с координатами
 
         socket.emit('spheres_out', {x: sprite.x, y:sprite.y, diameter:diameter, color:color});
+		setTimeout(function(){
+            stage.update();
+		}, 1);
 
-		stage.update();
 
         sprite.on ('pressmove', function(event){                                                                        //отработка движения при нажатой клавише
           event.target.x = event.stageX;
           event.target.y = event.stageY;
           stage.update();
-          socket.emit('spheres_out', {});
+          socket.emit('spheres_out', {x: sprite.x, y:sprite.y, diameter:diameter, color:color});
 		});
 
         socket.on('spheres_in', function (data) {
-            drawSprite(event.StageX, event.StageY, color, diameter);
+            stage.removeAllChildren();
+            stage.addChild(sprite);
             for (var key in data) {
                  if (key !== socket.id) {
                      var sprite = new createjs.Shape();
@@ -56,29 +62,21 @@
                      sprite.graphics.beginFill(color).drawCircle(1, 1, diameter);
                      sprite.x = data[key].x;
                      sprite.y = data[key].y;
+                     stage.addChild(sprite);
                  }
 
             };
 
-            stage.update();
+            setTimeout(function () {
+                stage.update();
+            }, 1)
 
         });
-		function drawSprite(data){
-		    for (var i=0; i<5; i++){
-		        for (var key in data){
-		            var sprite = new createjs.Shape();
-		            var color = data[key].color;
-		            var diameter = data[key].diameter;
-		            setTimeout(function(){
-                        sprite.graphics.beginFill(color).drawCircle(1, 1, diameter);
-                        sprite.x = data[key].x;
-                        sprite.y = data[key].y;
-					}, 100);
-		            stage.addChild(sprite);
-		            stage.update();
-				}
-			}
-		};
+        window.onresize = function(event) {
+            stage.canvas.width = window.innerWidth;
+            stage.canvas.height = window.innerHeight;
+            stage.update();
+        };
     </script>
 </body>
 
