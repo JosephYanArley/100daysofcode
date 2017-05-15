@@ -39,9 +39,9 @@
         stage.addChild(sprite);																							//добавялем на канвас с координатами
 
         socket.emit('spheres_out', {x: sprite.x, y:sprite.y, diameter:diameter, color:color});
-		setTimeout(function(){
+
             stage.update();
-		}, 1);
+
 
 
         sprite.on ('pressmove', function(event){                                                                        //отработка движения при нажатой клавише
@@ -67,12 +67,11 @@
 
             };
 
-            setTimeout(function () {
                 stage.update();
-            }, 1)
+
 
         });
-        window.onresize = function(event) {
+        window.onresize = function(event) {																				//на случай ресайза (вращение экрана, например)
             stage.canvas.width = window.innerWidth;
             stage.canvas.height = window.innerHeight;
             stage.update();
